@@ -1,4 +1,9 @@
 <html>
-	<video src="video/one.mp4" controls>
-	</video>
+	<head>
+		<script type="text/javascript" src="navigation.js"></script>
+	</head>
+	<body onkeydown="playNextVideo(event);">
+		<video src="video/test.mp4" controls id="theVideo" style="-webkit-filter:grayscale(100%); -moz-filter:grayscale(100%); -ms-filter:grayscale(100%); filter:grayscale(100%);">
+		</video>
+	</body>
 </html>
