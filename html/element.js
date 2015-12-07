@@ -1,124 +1,118 @@
-function turnLeft() {
-	return this.left;
-}
-
-function turnRight() {
-	return this.right;
-}
-
-function noChoice() {
-	return this.default;
-}
-
-
-function Element(video, left, right, default, audio_time, audio_array, talk_video_array, death_video_array) {
-	this.video = video;
+function AisleEndNorth(left, right, south, video) {
 	this.left = left;
 	this.right = right;
-	this.default = default;
-	this.audio_time = audio_time;
-	this.audio_array = audio_array;
+	this.south = south;
+	this.video = video;
 }
 
-var twoNorth, twoSouth, twoNorthRight, twoSouthLeft;
-var twoThreeSouth, twoThreeNorthStraight;
-var twoThreeNorth, twoThreeSouthStraight;
+function AisleEndSouth(left, right, north, video) {
+	this.left = left;
+	this.right = right;
+	this.north = north;
+	this.video = video;
+}
 
-var threeNorth, threeSouth, threeNorthLeft, threeNorthRight, threeSouthLeft, threeSouthRight;
-var threeTwoSouth, threeTwoNorthStraight, threeFourSouth, threeFourNorthStraight;
-var threeFourNorth, threeFourSouthStraight, threeTwoNorth, threeTwoSouthStraight;
+function EndcapNorth(left, right) {
+	
+}
 
-var fourNorth, fourSouth, fourNorthLeft, fourNorthRight, fourSouthLeft, fourSouthRight;
-var fourThreeSouth, fourThreeNorthStraight, fourFiveSouth, fourFiveNorthStraight;
-var fourFiveNorth, fourFiveSouthStraight, fourThreeNorth, fourThreeSouthStraight;
+function EndcapSouth(left, right) {
+	
+}
 
-var fiveNorth, fiveSouth, fiveNorthLeft, fiveNorthRight, fiveSouthLeft, fiveSouthRight;
-var fiveFourSouth, fiveFourNorthStraight, fiveSixSouth, fiveSixNorthStraight;
-var fiveSixNorth, fiveSixSouthStraight, fiveFourNorth, fiveFourSouthStraight;
+function AisleVideo(file, audio_time, audio_array, alternate_array) {
+	
+}
 
-var sixNorth, sixSouth, sixNorthLeft, sixNorthRight, sixSouthLeft, sixSouthRight;
-var sixFiveSouth, sixFiveNorthStraight, sixSevenSouth, sixSevenNorthStraight;
-var sixSevenNorth, sixSevenSouthStraight, sixFiveNorth, sixFiveSouthStraight;
+function EndcapVideo() {
+	
+}
 
-var sevenNorth, sevenSouth, sevenNorthLeft, sevenSouthRight;
-var sevenSixSouth, sevenSixNorthStraight;
-var sevenSixNorth, sevenSixSouthStraight;
+//aisles moving north
+var twoNorth, threeNorth, fourNorth, fiveNorth, sixNorth, sevenNorth;
+
+//aisles moving south
+var twoSouth, threeSouth, fourSouth, fiveSouth, sixSouth, sevenSouth
+
+//north endcaps moving east
+var twoThreeNorth, threeFourNorth, fourFiveNorth, fiveSixNorth, sixSevenNorth;
+
+//north endcaps moving west
+var sevenSixNorth, sixFiveNorth, fiveFourNorth, fourThreeNorth, threeTwoNorth;
+
+//south endcaps moving east
+var twoThreeSouth, threeFourSouth, fourFiveSouth, fiveSixSouth, sixSevenSouth;
+
+//south endcaps moving west
+var sevenSixSouth, sixFiveSouth, fiveFourSouth, fourThreeSouth, threeTwoSouth;
+
+//northbound aisle videos
+var twoNorthVideo, threeNorthVideo, fourNorthVideo, fiveNorthVideo, sixNorthVideo, sevenNorthVideo;
+
+//southbound aisle videos
+var twoSouthVideos, threeSouthVideo, fourSouthVideo, fiveSouthVideo, sixSouthVideo, sevenSouthVideo;
 
 
-twoNorth = new Element("video/twoNorth.mp4", twoNorthRight, twoNorthRight, twoNorthRight, nil, nil, nil, nil);
-twoSouth = new Element("video/twoSouth.mp4", twoSouthLeft, twoSouthRight, twoSouthRight, nil, nil, [],[]);
-twoNorthRight = new Element("video/twoNorthRight.mp4", twoThreeNorthStraight, twoThreeSouth, twoThreeNorthStraight, nil, nil, nil, nil); 
-twoSouthLeft = new Element("video/twoSouthLeft.mp4", twoThreeSouth, twoThreeSouth, twoThreeSouth, nil, nil, nil, nil);
-twoThreeSouth = new Element("video/twoThreeSouth.mp4", threeSouth, twoThreeSouthStraight, twoThreeSouthStraight, nil, nil, nil, nil);
-twoThreeNorthStraight = new Element("video/twoThreeNorthStraight.mp4", threeFourNorthStraight, twoThreeSouth, threeFourNorthStraight, nil, nil, nil, nil);
-twoThreeNorth = new Element("video/twoThreeNorth.mp4", threeFourNorthStraight, twoThreeSouth, threeFourNorthStraight, nil, nil, nil, nil);
-twoThreeSouthStraight;
+//aisle video objects
+twoNorthVideo = new AisleVideo(file, audio_time, audio_array, alternate_array);
+threeNorthVideo = new AisleVideo(file, audio_time, audio_array, alternate_array);
+TODO
 
-threeNorth;
-threeSouth;
-threeNorthLeft;
-threeNorthRight;
-threeSouthLeft;
-threeSouthRight;
-threeTwoSouth;
-threeTwoNorthStraight;
-threeFourSouth;
-threeFourNorthStraight;
-threeFourNorth;
-threeFourSouthStraight;
-threeTwoNorth;
-threeTwoSouthStraight;
 
-fourNorth;
-fourSouth;
-fourNorthLeft;
-fourNorthRight;
-fourSouthLeft;
-fourSouthRight;
-fourThreeSouth;
-fourThreeNorthStraight;
-fourFiveSouth;
-fourFiveNorthStraight;
-fourFiveNorth;
-fourFiveSouthStraight;
-fourThreeNorth;
-fourThreeSouthStraight;
+//aisles moving north objects
+twoNorth = new AisleEndNorth(twoNorthVideo);
+threeNorth = new AisleEndNorth(threeNorthVideo);
+TODO
 
-fiveNorth;
-fiveSouth;
-fiveNorthLeft;
-fiveNorthRight;
-fiveSouthLeft;
-fiveSouthRight;
-fiveFourSouth;
-fiveFourNorthStraight;
-fiveSixSouth;
-fiveSixNorthStraight;
-fiveSixNorth;
-fiveSixSouthStraight;
-fiveFourNorth;
-fiveFourSouthStraight;
+//aisles moving north graph
+twoNorth.left = twoThreeNorth;
+twoNorth.right = twoThreeNorth;
+twoNorth.south = twoSouth;
 
-sixNorth;
-sixSouth;
-sixNorthLeft;
-sixNorthRight;
-sixSouthLeft;
-sixSouthRight;
-sixFiveSouth;
-sixFiveNorthStraight;
-sixSevenSouth;
-sixSevenNorthStraight;
-sixSevenNorth;
-sixSevenSouthStraight;
-sixFiveNorth;
-sixFiveSouthStraight;
+threeNorth.left = threeTwoNorth;
+threeNorth.right = threeFourNorth;
+threeNorth.south = threeSouth;
 
-sevenNorth;
-sevenSouth;
-sevenNorthLeft;
-sevenSouthRight;
-sevenSixSouth;
-sevenSixNorthStraight;
-sevenSixNorth;
-sevenSixSouthStraight;
+TODO
+
+fourNorth = new AisleEndNorth(fourThreeNorth, fourFiveNorth, fourSouth, fourNorthVideo);
+fiveNorth = new AisleEndNorth(fiveFourNorth, fiveSixNorth, fiveSouth, fiveNorthVideo);
+sixNorth = new AisleEndNorth(sixFiveNorth, fiveSixNorth, sixSouth, sixNorthVideo);
+sevenNorth = new AisleEndNorth(sevenSixNorth, sevenSixNorth, sevenSouth, sevenNorthVideo);
+
+//aisles moving south
+twoSouth = new AisleEndSouth(twoThreeSouth, twoThreeSouth, twoNorth);
+threeSouth = new AisleEndSouth(threeFourSouth, threeTwoSouth, threeNorth);
+fourSouth = new AisleEndSouth(fourFiveSouth, fourThreeSouth, fourNorth);
+fiveSouth = new AisleEndSouth(fiveSixSouth, fiveFourSouth, fiveNorth);
+sixSouth = new AisleEndSouth(sixSevenSouth, sixFiveSouth, sixNorth);
+sevenSouth = new AisleEndSouth(sevenSixSouth, sevenSixSouth, sevenNorth);
+
+//north endcaps moving east 23 34 45 56 67
+sixSevenNorth = new EndcapNorth(sevenNorth, sevenNorth);
+fiveSixNorth = new EndcapNorth(sixSevenNorth, sixNorth);
+fourFiveNorth = new EndcapNorth(fiveSixNorth, fiveNorth);
+threeFourNorth = new EndcapNorth(fourFiveNorth, fourNorth);
+twoThreeNorth = new EndcapNorth(threeFourNorth, threeNorth);
+
+//north endcaps moving west 32 43 54 65 76
+threeTwoNorth = new EndcapNorth(twoNorth, twoNorth);
+fourThreeNorth = new EndcapNorth(threeNorth, twoThreeNorth);
+fiveFourNorth = new EndcapNorth(fourNorth, threeFourNorth);
+sixFiveNorth = new EndcapNorth(fiveNorth, fourFiveNorth);
+sevenSixNorth = new EndcapNorth(sixNorth, fiveSixNorth);
+
+//south endcaps moving east 23 34 45 56 67
+twoThreeSouth = new EndcapSouth(threeSouth, threeFourSouth);
+threeFourSouth = new EndcapSouth(fourSouth, fourFiveSouth);
+fourFiveSouth = new EndcapSouth(fiveSouth, fiveSixSouth);
+fiveSixSouth = new EndcapSouth(sixSouth, sixSevenSouth);
+sixSevenSouth = new EndcapSouth(sevenSouth, sevenSouth);
+
+//south endcaps moving west 76 65 54 43 32
+sevenSixSouth = new EndcapSouth(sixFiveSouth, sixSouth);
+sixFiveSouth = new EndcapSouth(fiveFourSouth, fiveSouth);
+fiveFourSouth = new EndcapSouth(fourThreeSouth, fourSouth);
+fourThreeSouth = new EndcapSouth(threeTwoSouth, threeSouth);
+threeTwoSouth = new EndcapSouth(twoSouth, twoSouth);
+
