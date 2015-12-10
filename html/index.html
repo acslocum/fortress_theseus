@@ -1,9 +1,11 @@
 <html>
 	<head>
+		<script type="text/javascript" src="element.js"></script>
 		<script type="text/javascript" src="navigation.js"></script>
 	</head>
-	<body onkeydown="playNextVideo(event);">
-		<video src="video/test.mp4" controls id="theVideo" style="-webkit-filter:grayscale(100%); -moz-filter:grayscale(100%); -ms-filter:grayscale(100%); filter:grayscale(100%);">
+	<body onkeydown="playNextVideo(event);" style="background-color:black">
+		<video src="video/twoNorth.mp4" onended="playNextVideo(event);" controls id="theVideo" >
 		</video>
 	</body>
 </html>
+<!--style="-webkit-filter:grayscale(100%); -moz-filter:grayscale(100%); -ms-filter:grayscale(100%); filter:grayscale(100%);"-->
