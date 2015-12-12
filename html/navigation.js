@@ -1,10 +1,14 @@
-var KEY_L = 76;
+var KEY_LEFT = 74;//J
 var KEY_P = 79;
 var KEY_E = 71;
-var KEY_R = 82;
+var KEY_RIGHT = 76;//L
 var KEY_SPACE = 32;
 
-var EVENT_CHANCE = 0.99;
+var EVENT_CHANCE = 0.70;
+var START_SCREEN_TIMEOUT = 20000;
+var VIDEO_VOLUME = 0.5;
+var MUSIC_VOLUME = 0.5;
+var TALK_VOLUME = 1.0;
 
 var startSpots = [oneNorth, twoNorth, threeNorth, fourNorth, fiveNorth, sixNorth];
 
@@ -22,6 +26,7 @@ var state = startSpot();
 function keyPressEvent(event) {
 	if(isValidKey(event.keyCode)) {
 		lastKeypress = event.keyCode;
+		hideArrows();
 	}
 	if(keyIsSpace(event) && noCheating(event,state)) {
 		init();
@@ -38,14 +43,19 @@ function noCheating(event,state) {
 
 function init() {
 	state = startSpot();
-	div = getOverlay();
-	div.style.visibility="hidden";
+	hideGameOver();
 	getAudio().pause();
+	getBackgroundAudio().play();
+	getBackgroundAudio().volume=MUSIC_VOLUME;
+	getBackgroundAudio().loop=true;
 	hideArrows();
+	hideInstructions();
 	video = getVideo();
+	video.style.visibility="visible";
 	video.style.cssText="";
 	playVideo(video, state.videoHolder.nextVideo());
 	lastKeypress = null;
+	
 }
 
 function getVideo() {
@@ -56,12 +66,20 @@ function getAudio() {
 	return document.getElementById("theAudio");
 }
 
+function getBackgroundAudio() {
+	return document.getElementById("backgroundAudio");
+}
+
 function getOverlay() {
 	return document.getElementById("gameOver");
 }
 
 function getArrows() {
 	return document.getElementById("arrows");
+}
+
+function getInstructions() {
+	return document.getElementById("instructions");
 }
 
 function isFatal(state) {
@@ -86,13 +104,14 @@ function playNextVideo() {
 function playVideo(video,src) {
 	video.src = src;
 	video.load();
-	video.volume = 0.5;
+	video.volume = VIDEO_VOLUME;
 	video.play();
 }
 
 function playAudio(audio,src) {
 	audio.src = src;
 	audio.load();
+	audio.volume = TALK_VOLUME;
 	audio.play();
 }
 
@@ -101,15 +120,23 @@ function shouldWaitForUser(state) {
 }
 
 function playGameOver() {
+	getBackgroundAudio().pause();
 	audio = getAudio();
 	playAudio(audio,"audio/gameOver.mp3");
+	setTimeout(showStartScreen, START_SCREEN_TIMEOUT);
 }
 
 function overlayGameOver() {
 	video = getVideo();
 	video.style.cssText="-webkit-filter:grayscale(100%);";
-	div = getOverlay();
-	div.style.visibility="visible";
+	showGameOver();
+}
+
+function showStartScreen() {
+	hideGameOver();
+	video = getVideo();
+	video.style.visibility="hidden";
+	showInstructions();
 }
 
 function nextState(state, event) {
@@ -121,10 +148,10 @@ function nextState(state, event) {
 		}
 		return state.next_aisle;
 	} else {
-		if(keyIs(key,KEY_L)) {
+		if(keyIs(key,KEY_LEFT)) {
 			return state.left;
 		}
-		if(keyIs(key,KEY_R)) {
+		if(keyIs(key,KEY_RIGHT)) {
 			return state.right;
 		}
 		return state;
@@ -138,7 +165,7 @@ function checkTimeEvents(event) {
 }
 
 function checkShowArrows(event) {
-	if(isVideoAlmostDone(getVideo()) && !state.is_endcap) {
+	if(isVideoAlmostDone(getVideo()) && !state.is_endcap && lastKeypress == null) {
 		showArrows();
 	}
 }
@@ -149,28 +176,17 @@ function checkGameOver(event) {
 			getVideo().pause();
 			playGameOver();
 			overlayGameOver();
-			//state = newGameState;
 		}
 	}
 }
 
 function checkStartAudio(event) {
 	if(state != null && state.is_encounter) {
-		if(Math.abs(event.target.currentTime - state.videoHolder.audioOffset()) < 1) {
+		if(Math.abs(event.target.currentTime - state.videoHolder.audioOffset()) < 0.5) {
 			audio = getAudio();
 			playAudio(audio, state.videoHolder.audioSrc());
 		}
 	}
-}
-
-function showArrows() {
-	arrows = getArrows();
-	arrows.style.visibility='visible';
-}
-
-function hideArrows() {
-	arrows = getArrows();
-	arrows.style.visibility="hidden";
 }
 
 function shouldRunEncounter(aisleState) {
@@ -183,6 +199,36 @@ function shouldRunEncounter(aisleState) {
 	return false;
 }
 
+function showInstructions() {
+	instructions = getInstructions();
+	instructions.style.visibility="visible";
+}
+
+function hideInstructions() {
+	instructions = getInstructions();
+	instructions.style.visibility="hidden";
+}
+
+function showArrows() {
+	arrows = getArrows();
+	arrows.style.visibility='visible';
+}
+
+function hideArrows() {
+	arrows = getArrows();
+	arrows.style.visibility="hidden";
+}
+
+function showGameOver() {
+	div = getOverlay();
+	div.style.visibility="visible";	
+}
+
+function hideGameOver() {
+	div = getOverlay();
+	div.style.visibility="hidden";
+}
+
 function isVideoAlmostDone(video) {
 	return (video.duration - video.currentTime) <= 5;
 }
@@ -192,7 +238,7 @@ function isVideoDone(video) {
 }
 
 function keyIsL(event) {
-	return keyIs(event.keyCode, KEY_L);
+	return keyIs(event.keyCode, KEY_LEFT);
 }
 
 function keyIsP(event) {
@@ -204,7 +250,7 @@ function keyIsE(event) {
 }
 
 function keyIsR(event) {
-	return keyIs(event.keyCode, KEY_R);
+	return keyIs(event.keyCode, KEY_RIGHT);
 }
 
 function keyIsSpace(event) {
@@ -216,5 +262,5 @@ function keyIs(keyCode, referenceKey) {
 }
 
 function isValidKey(keyCode) {
-	return keyIs(event.keyCode,KEY_L) || keyIs(event.keyCode,KEY_R) || keyIs(event.keyCode,KEY_SPACE);
+	return keyIs(event.keyCode,KEY_LEFT) || keyIs(event.keyCode,KEY_RIGHT) || keyIs(event.keyCode,KEY_SPACE);
 }
