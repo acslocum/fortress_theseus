@@ -44,9 +44,7 @@ function init() {
 	hideArrows();
 	video = getVideo();
 	video.style.cssText="";
-	video.src = state.videoHolder.nextVideo();
-	video.load();
-	video.play();
+	playVideo(video, state.videoHolder.nextVideo());
 	lastKeypress = null;
 }
 
@@ -80,10 +78,22 @@ function playNextVideo() {
 			videoHolder = state.videoHolder;
 		}
 		hideArrows();
-		video.src = videoHolder.nextVideo();
-		video.load();
-		video.play();
+		playVideo(video,videoHolder.nextVideo());
+		
 	}
+}
+
+function playVideo(video,src) {
+	video.src = src;
+	video.load();
+	video.volume = 0.5;
+	video.play();
+}
+
+function playAudio(audio,src) {
+	audio.src = src;
+	audio.load();
+	audio.play();
 }
 
 function shouldWaitForUser(state) {
@@ -92,9 +102,7 @@ function shouldWaitForUser(state) {
 
 function playGameOver() {
 	audio = getAudio();
-	audio.src = "audio/gameOver.mp3";
-	audio.load();
-	audio.play();
+	playAudio(audio,"audio/gameOver.mp3");
 }
 
 function overlayGameOver() {
@@ -150,9 +158,7 @@ function checkStartAudio(event) {
 	if(state != null && state.is_encounter) {
 		if(Math.abs(event.target.currentTime - state.videoHolder.audioOffset()) < 1) {
 			audio = getAudio();
-			audio.src = state.videoHolder.audioSrc();
-			audio.load();
-			audio.play();
+			playAudio(audio, state.videoHolder.audioSrc());
 		}
 	}
 }
