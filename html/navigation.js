@@ -4,13 +4,16 @@ var KEY_E = 71;
 var KEY_R = 82;
 var KEY_SPACE = 32;
 
-var startSpots = {oneNorth, twoNorth, threeNorth, fourNorth, fiveNorth, sixNorth};
+var EVENT_CHANCE = 0.99;
+
+var startSpots = [oneNorth, twoNorth, threeNorth, fourNorth, fiveNorth, sixNorth];
 
 
 var lastKeypress = null;
 
 function startSpot() {
-	return startSpots[(int)(random()*6)];
+	return fourSouth;
+	//return startSpots[Math.floor(Math.random()*startSpots.length)];
 }
 
 var state = startSpot();
@@ -20,12 +23,26 @@ function keyPressEvent(event) {
 	if(isValidKey(event.keyCode)) {
 		lastKeypress = event.keyCode;
 	}
+	if(isVideoDone(getVideo)) {
+		playNextVideo();
+	}
 }
 
-function playNextVideo(event) {
-	video = document.getElementById("theVideo");
+function init() {
+	video = getVideo();
+	video.src = state.videoHolder.nextVideo();
+	video.load();
+	video.play();
+}
 
-	if(isVideoDone(video) && !shouldWaitForUser(state,event)) {
+function getVideo() {
+	return document.getElementById("theVideo");
+}
+
+function playNextVideo() {
+	video = getVideo();
+
+	if(isVideoDone(video) && !shouldWaitForUser(state)) {
 		if(!state.shouldPlayAnotherVideo()) {
 			oldState = state;//debug only
 			state = nextState(state,event);
@@ -37,15 +54,15 @@ function playNextVideo(event) {
 	}
 }
 
-function shouldWaitForUser(state,event) {
-	return (state instanceof Aisle && event.type=="ended")
+function shouldWaitForUser(state) {
+	return (state instanceof Aisle) && (lastKeypress == null);
 }
 
 function nextState(state, event) {
 	key = lastKeypress;
-	lastKeyPress = null;
+	lastKeypress = null;
 	if(state.is_endcap) {
-		if(shouldRunEncounter(state.nextAisle)) {
+		if(shouldRunEncounter(state.next_aisle)) {
 			return state.next_aisle.encounter;
 		}
 		return state.next_aisle;
@@ -61,10 +78,10 @@ function nextState(state, event) {
 }
 
 function checkStartAudio(event) {
-	if(state.is_encounter) {
-		if(event.currentTime == state.audio_offset) {
+	if(state != null && state.is_encounter) {
+		if(Math.abs(event.target.currentTime - state.audio_offset) < 1) {
 			audio = document.getElementById("theAudio");
-			audio.source = state.audio_src;
+			audio.src = state.audio_src;
 			audio.load();
 			audio.play();
 		}
@@ -72,7 +89,7 @@ function checkStartAudio(event) {
 }
 
 function shouldRunEncounter(aisleState) {
-	if(random() < 0.5) {
+	if(Math.random() > EVENT_CHANCE) { //no encounter
 		return false;
 	}
 	if(aisleState.has_encounter) {

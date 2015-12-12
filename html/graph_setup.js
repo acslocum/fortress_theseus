@@ -48,10 +48,10 @@ fiveSouthVideo = new AisleVideo("video/fiveSouth.mp4");
 sixSouthVideo = new AisleVideo("video/sixSouth.mp4");
 
 //encounter video
-twoNorthVideo = new AisleVideo("video/twoNorthEncounter1.mp4");
-threeNorthVideo = new AisleVideo("video/threeNorthEncounter1.mp4");
-fiveNorthVideo = new AisleVideo("video/fiveNorthEncounter1.mp4");
-oneSouthVideo = new AisleVideo("video/oneSouthEncounter1.mp4");
+twoNorthEncounterVideo = new AisleVideo("video/twoNorthEncounter1.mp4");
+threeNorthEncounterVideo = new AisleVideo("video/threeNorthEncounter1.mp4");
+fiveNorthEncounterVideo = new AisleVideo("video/fiveNorthEncounter1.mp4");
+oneSouthEncounterVideo = new AisleVideo("video/oneSouthEncounter1.mp4");
 
 
 //endcap video
@@ -79,9 +79,9 @@ fourThreeSouthVideo = new EndcapVideo("video/fourSouthRight.mp4", "video/threeSo
 fiveFourSouthVideo = new EndcapVideo("video/fiveSouthRight.mp4", "video/fourSouthRightEnter.mp4");
 sixFiveSouthVideo = new EndcapVideo("video/sixSouthRight.mp4", "video/fiveSouthRightEnter.mp4");
 
-twoNorthEncounter = new AisleEncounter(twoNorthEncounterVideo, "twoNorthEncounter", "audio/minotaur1.mp3", 5);
-threeNorthEncounter = new AisleEncounter(threeNorthEncounterVideo, "threeNorthEncounter", "audio/woman1.mp3", 5);
-fiveNorthEncounter = new AisleEncounter(fiveNorthEncounterVideo, "fiveNorthEncounter", "audio/woman2.mp3", 5);
+twoNorthEncounter = new AisleEncounter(twoNorthEncounterVideo, "twoNorthEncounter", "audio/minotaur1.mp3", 6);
+threeNorthEncounter = new AisleEncounter(threeNorthEncounterVideo, "threeNorthEncounter", "audio/sentry1.mp3", 10);
+fiveNorthEncounter = new AisleEncounter(fiveNorthEncounterVideo, "fiveNorthEncounter", "audio/minotaur2.mp3", 5);
 oneSouthEncounter = new AisleEncounter(oneSouthEncounterVideo, "oneSouthEncounter", "audio/sentry1.mp3", 5);
 
 //aisles moving north objects

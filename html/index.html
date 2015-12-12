@@ -4,10 +4,10 @@
 	<script type="text/javascript" src="graph_setup.js"></script>
 		<script type="text/javascript" src="navigation.js"></script>
 	</head>
-	<body onkeydown="keyPressEvent(event);" style="background-color:black">
-		<video src="video/twoNorth.mp4" onended="playNextVideo(event);" ontimeupdate="checkStartAudio(event)" controls id="theVideo" >
+	<body onkeydown="keyPressEvent(event);" onload="init();" style="background-color:black">
+		<video src="video/oneSouth.mp4" onended="playNextVideo();" ontimeupdate="checkStartAudio(event)" controls id="theVideo" >
 		</video>
-		<audio id="theAudio"/>
+		<audio id="theAudio" src="audio/minotaur1.mp3"/>
 	</body>
 </html>
 <!--style="-webkit-filter:grayscale(100%); -moz-filter:grayscale(100%); -ms-filter:grayscale(100%); filter:grayscale(100%);"-->
