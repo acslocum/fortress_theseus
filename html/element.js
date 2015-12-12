@@ -20,6 +20,10 @@ function aisleShouldPlayAnotherVideo() {
 	return false;
 }
 
+function audioSrc() {
+	return this.audio_array[Math.floor(Math.random()*this.audio_array.length)];
+}
+
 function Aisle(videoHolder, name, has_encounter, encounter) {
 	this.videoHolder = videoHolder;
 	this.name = name;
@@ -30,11 +34,9 @@ function Aisle(videoHolder, name, has_encounter, encounter) {
 	this.is_encounter = false;
 }
 
-function AisleEncounter(videoHolder, name, audio_src, audio_offset) {
+function AisleEncounter(videoHolder, name) {
 	this.videoHolder = videoHolder;
 	this.name = name;
-	this.audio_src = audio_src;
-	this.audio_offset = audio_offset;
 	this.is_endcap = false;
 	this.shouldPlayAnotherVideo = aisleShouldPlayAnotherVideo;
 	this.is_encounter = true;
@@ -50,6 +52,14 @@ function Endcap(videoHolder, name) {
 function AisleVideo(file) {
 	this.file = file;
 	this.nextVideo = aisleVideo;
+}
+
+function AisleEncounterVideo(file, audio_array, audio_offset) {
+	this.file = file;
+	this.nextVideo = aisleVideo;
+	this.audio_array = audio_array;
+	this.audio_offset = audio_offset;
+	this.audioSrc = audioSrc;
 }
 
 function EndcapVideo(first_file, second_file) {

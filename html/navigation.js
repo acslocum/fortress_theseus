@@ -12,7 +12,7 @@ var startSpots = [oneNorth, twoNorth, threeNorth, fourNorth, fiveNorth, sixNorth
 var lastKeypress = null;
 
 function startSpot() {
-	return fourSouth;
+	return fiveNorth;
 	//return startSpots[Math.floor(Math.random()*startSpots.length)];
 }
 
@@ -55,7 +55,7 @@ function playNextVideo() {
 }
 
 function shouldWaitForUser(state) {
-	return (state instanceof Aisle) && (lastKeypress == null);
+	return (state instanceof Aisle || state instanceof AisleEncounter) && (lastKeypress == null);
 }
 
 function nextState(state, event) {
@@ -79,9 +79,9 @@ function nextState(state, event) {
 
 function checkStartAudio(event) {
 	if(state != null && state.is_encounter) {
-		if(Math.abs(event.target.currentTime - state.audio_offset) < 1) {
+		if(Math.abs(event.target.currentTime - state.videoHolder.audio_offset) < 1) {
 			audio = document.getElementById("theAudio");
-			audio.src = state.audio_src;
+			audio.src = state.videoHolder.audioSrc();
 			audio.load();
 			audio.play();
 		}

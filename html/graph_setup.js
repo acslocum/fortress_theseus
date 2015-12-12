@@ -29,8 +29,9 @@ var oneTwoSouthVideo, twoThreeSouthVideo, threeFourSouthVideo, fourFiveSouthVide
 //south going west endcap videos
 var twoOneSouthVideo, threeTwoSouthVideo, fourThreeSouthVideo, fiveFourSouthVideo, sixFiveSouthVideo;
 
-var twoNorthEncounter, threeNorthEncounter, fiveNorthEncounter, oneSouthEncounter;
-var twoNorthEncounterVideo, threeNorthEncounterVideo, fiveNorthEncounterVideo, oneSouthEncounterVideo;
+var twoNorthEncounter, threeNorthEncounter, fiveNorthEncounter, oneSouthEncounter, fiveSouthEncounter, fourSouthEncounter, sixNorthEncounter, sixSouthEncounter;
+
+var twoNorthEncounterVideo, threeNorthEncounterVideo, fiveNorthEncounterVideo, oneSouthEncounterVideo, fiveSouthEncounterVideo, fourSouthEncounterVideo, sixNorthEncounterVideo, sixSouthEncounterVideo;
 
 //aisle video
 oneNorthVideo = new AisleVideo("video/oneNorth.mp4");
@@ -47,11 +48,19 @@ fourSouthVideo = new AisleVideo("video/fourSouth.mp4");
 fiveSouthVideo = new AisleVideo("video/fiveSouth.mp4");
 sixSouthVideo = new AisleVideo("video/sixSouth.mp4");
 
+var minotaur_audio = ["audio/minotaur1.mp3", "audio/minotaur2.mp3", "audio/minotaur3.mp3", "audio/minotaur4.mp3", "audio/minotaur5.mp3", "audio/minotaur6.mp3", "audio/minotaur7.mp3"];
+var sentry_audio = ["audio/sentry1.mp3", "audio/sentry2.mp3", "audio/sentry3.mp3", "audio/sentry4.mp3", "audio/sentry5.mp3", "audio/sentry6.mp3", "audio/sentry7.mp3", "audio/sentry8.mp3", "audio/sentry9.mp3"];
+var woman_audio = ["audio/woman1.mp3", "audio/woman2.mp3", "audio/woman3.mp3", "audio/woman4.mp3", "audio/woman5.mp3", "audio/woman6.mp3", "audio/woman7.mp3", "audio/woman8.mp3", "audio/woman9.mp3", "audio/woman10.mp3", "audio/woman11.mp3", "audio/woman12.mp3"]
+
 //encounter video
-twoNorthEncounterVideo = new AisleVideo("video/twoNorthEncounter1.mp4");
-threeNorthEncounterVideo = new AisleVideo("video/threeNorthEncounter1.mp4");
-fiveNorthEncounterVideo = new AisleVideo("video/fiveNorthEncounter1.mp4");
-oneSouthEncounterVideo = new AisleVideo("video/oneSouthEncounter1.mp4");
+twoNorthEncounterVideo = new AisleEncounterVideo("video/twoNorthEncounter1.mp4", minotaur_audio, 6);
+threeNorthEncounterVideo = new AisleEncounterVideo("video/threeNorthEncounter1.mp4", sentry_audio, 10);
+fiveNorthEncounterVideo = new AisleEncounterVideo("video/fiveNorthEncounter1.mp4", minotaur_audio, 5); //1 mino, 2 sentry
+oneSouthEncounterVideo = new AisleEncounterVideo("video/oneSouthEncounter1.mp4", minotaur_audio, 7);
+fiveSouthEncounterVideo = new AisleEncounterVideo("video/fiveSouthEncounter1.mp4", minotaur_audio, 8);
+fourSouthEncounterVideo = new AisleEncounterVideo("video/fourSouthEncounter1.mp4", sentry_audio, 6);
+sixNorthEncounterVideo = new AisleEncounterVideo("video/sixNorthEncounter1.mp4", woman_audio, 12);//3
+sixSouthEncounterVideo = new AisleEncounterVideo("video/sixSouthEncounter1.mp4", woman_audio, 13);//timing 2
 
 
 //endcap video
@@ -79,10 +88,15 @@ fourThreeSouthVideo = new EndcapVideo("video/fourSouthRight.mp4", "video/threeSo
 fiveFourSouthVideo = new EndcapVideo("video/fiveSouthRight.mp4", "video/fourSouthRightEnter.mp4");
 sixFiveSouthVideo = new EndcapVideo("video/sixSouthRight.mp4", "video/fiveSouthRightEnter.mp4");
 
-twoNorthEncounter = new AisleEncounter(twoNorthEncounterVideo, "twoNorthEncounter", "audio/minotaur1.mp3", 6);
-threeNorthEncounter = new AisleEncounter(threeNorthEncounterVideo, "threeNorthEncounter", "audio/sentry1.mp3", 10);
-fiveNorthEncounter = new AisleEncounter(fiveNorthEncounterVideo, "fiveNorthEncounter", "audio/minotaur2.mp3", 5);
-oneSouthEncounter = new AisleEncounter(oneSouthEncounterVideo, "oneSouthEncounter", "audio/sentry1.mp3", 5);
+twoNorthEncounter = new AisleEncounter(twoNorthEncounterVideo, "twoNorthEncounter");
+threeNorthEncounter = new AisleEncounter(threeNorthEncounterVideo, "threeNorthEncounter");
+fiveNorthEncounter = new AisleEncounter(fiveNorthEncounterVideo, "fiveNorthEncounter");
+oneSouthEncounter = new AisleEncounter(oneSouthEncounterVideo, "oneSouthEncounter");
+
+fiveSouthEncounter = new AisleEncounter(fiveSouthEncounterVideo, "fiveSouthEncounter");
+fourSouthEncounter = new AisleEncounter(fourSouthEncounterVideo, "fourSouthEncounter");
+sixNorthEncounter = new AisleEncounter(sixNorthEncounterVideo, "sixNorthEncounter");
+sixSouthEncounter = new AisleEncounter(sixSouthEncounterVideo, "sixSouthEncounter");
 
 //aisles moving north objects
 oneNorth = new Aisle(oneNorthVideo,"oneNorth", false, null);
@@ -90,15 +104,15 @@ twoNorth = new Aisle(twoNorthVideo,"twoNorth", true, twoNorthEncounter);
 threeNorth = new Aisle(threeNorthVideo,"threeNorth", true, threeNorthEncounter);
 fourNorth = new Aisle(fourNorthVideo,"fourNorth", false, null);
 fiveNorth = new Aisle(fiveNorthVideo,"fiveNorth", true, fiveNorthEncounter);
-sixNorth = new Aisle(sixNorthVideo,"sixNorth", false, null);
+sixNorth = new Aisle(sixNorthVideo,"sixNorth", true, sixNorthEncounter);
 
 //aisles moving south
 oneSouth = new Aisle(oneSouthVideo,"oneSouth", true, oneSouthEncounter);
 twoSouth = new Aisle(twoSouthVideo,"twoSouth", false, null);
 threeSouth = new Aisle(threeSouthVideo,"threeSouth", false, null);
-fourSouth = new Aisle(fourSouthVideo,"fourSouth", false, null);
-fiveSouth = new Aisle(fiveSouthVideo,"fiveSouth", false, null);
-sixSouth = new Aisle(sixSouthVideo,"sixSouth", false, null);
+fourSouth = new Aisle(fourSouthVideo,"fourSouth", true, fourSouthEncounter);
+fiveSouth = new Aisle(fiveSouthVideo,"fiveSouth", true, fiveSouthEncounter);
+sixSouth = new Aisle(sixSouthVideo,"sixSouth", true, sixSouthEncounter);
 
 //north endcaps moving east 12 23 34 45 56
 fiveSixNorth = new Endcap(fiveSixNorthVideo,"fiveSixNorth");
@@ -180,6 +194,17 @@ fiveNorthEncounter.right = fiveSixNorth;
 oneSouthEncounter.left = oneTwoSouth;
 oneSouthEncounter.right = oneTwoSouth;
 
+fourSouthEncounter.left = fourFiveSouth;
+fourSouthEncounter.right = fourThreeSouth;
+
+fiveSouthEncounter.left = fiveSixSouth;
+fiveSouthEncounter.right = fiveFourSouth;
+
+sixNorthEncounter.left = sixFiveNorth;
+sixNorthEncounter.right = sixFiveNorth;
+
+sixSouthEncounter.left = sixFiveSouth;
+sixSouthEncounter.right = sixFiveSouth;
 
 //north endcaps
 fiveSixNorth.next_aisle = sixSouth;
