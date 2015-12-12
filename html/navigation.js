@@ -46,6 +46,7 @@ function init() {
 	video.src = state.videoHolder.nextVideo();
 	video.load();
 	video.play();
+	lastKeypress = null;
 }
 
 function getVideo() {
