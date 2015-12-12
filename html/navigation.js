@@ -8,6 +8,7 @@ var EVENT_CHANCE = 0.99;
 
 var startSpots = [oneNorth, twoNorth, threeNorth, fourNorth, fiveNorth, sixNorth];
 
+var newGameState;
 
 var lastKeypress = null;
 
@@ -18,6 +19,10 @@ function startSpot() {
 
 var state = startSpot();
 
+function start() {
+	div = getOverlay();
+	div.visibility = 'hidden';
+}
 
 function keyPressEvent(event) {
 	if(isValidKey(event.keyCode)) {
@@ -29,6 +34,8 @@ function keyPressEvent(event) {
 }
 
 function init() {
+	div = getOverlay();
+	div.style.visibility="hidden";
 	video = getVideo();
 	video.src = state.videoHolder.nextVideo();
 	video.load();
@@ -37,6 +44,14 @@ function init() {
 
 function getVideo() {
 	return document.getElementById("theVideo");
+}
+
+function getOverlay() {
+	return document.getElementById("gameOver");
+}
+
+function isFatal(state) {
+	return (state instanceof AisleEncounter) && state.videoHolder.is_fatal;
 }
 
 function playNextVideo() {
@@ -58,6 +73,20 @@ function shouldWaitForUser(state) {
 	return (state instanceof Aisle || state instanceof AisleEncounter) && (lastKeypress == null);
 }
 
+function playGameOver() {
+	audio = document.getElementById("theAudio");
+	audio.src = "audio/gameOver.mp3";
+	audio.load();
+	audio.play();
+}
+
+function overlayGameOver() {
+	video = getVideo();
+	video.style.cssText="-webkit-filter:grayscale(100%);";
+	div = getOverlay();
+	div.style.visibility="visible";
+}
+
 function nextState(state, event) {
 	key = lastKeypress;
 	lastKeypress = null;
@@ -74,6 +103,22 @@ function nextState(state, event) {
 			return state.right;
 		}
 		return state;
+	}
+}
+
+function checkTimeEvents(event) {
+	checkGameOver(event);
+	checkStartAudio(event);
+}
+
+function checkGameOver(event) {
+	if(isFatal(state)) {
+		if(Math.abs(event.target.currentTime - state.videoHolder.deathOffset()) < 1) {
+			getVideo().pause();
+			playGameOver();
+			overlayGameOver();
+			//state = newGameState;
+		}
 	}
 }
 

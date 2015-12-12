@@ -34,6 +34,10 @@ function audioOffset() {
 	return this.audio_offset_array[this.index];
 }
 
+function deathOffset() {
+	return this.death_offset_array[this.index];
+}
+
 function Aisle(videoHolder, name, has_encounter, encounter) {
 	this.videoHolder = videoHolder;
 	this.name = name;
@@ -64,14 +68,17 @@ function AisleVideo(file) {
 	this.nextVideo = aisleVideo;
 }
 
-function AisleEncounterVideo(file_array, audio_array, audio_offset_array) {
+function AisleEncounterVideo(file_array, audio_array, audio_offset_array, is_fatal, death_offset_array) {
 	this.file_array = file_array;
 	this.index = 0;
 	this.nextVideo = aisleEncounterVideo;
 	this.audio_array = audio_array;
 	this.audio_offset_array = audio_offset_array;
+	this.is_fatal = is_fatal;
+	this.death_offset_array = death_offset_array;
 	this.audioSrc = audioSrc;
 	this.audioOffset = audioOffset;
+	this.deathOffset = deathOffset;
 }
 
 function EndcapVideo(first_file, second_file) {

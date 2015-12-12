@@ -55,14 +55,14 @@ var woman_audio_tea = ["audio/woman2.mp3"];
 var sentry_death_audio = ["audio/sentryDeath1.mp3", "audio/sentryDeath2.mp3", "audio/sentryDeath3.mp3"];
 
 //encounter video
-twoNorthEncounterVideo = new AisleEncounterVideo(["video/twoNorthEncounter1.mp4"], [minotaur_audio], [6]);
-threeNorthEncounterVideo = new AisleEncounterVideo(["video/threeNorthEncounter1.mp4"], [sentry_audio], [10]);
-fiveNorthEncounterVideo = new AisleEncounterVideo(["video/fiveNorthEncounter1.mp4", "video/fiveNorthEncounter2.mp4"], [minotaur_audio, sentry_death_audio], [8,2]);
-oneSouthEncounterVideo = new AisleEncounterVideo(["video/oneSouthEncounter1.mp4"], [minotaur_audio], [7]);
-fiveSouthEncounterVideo = new AisleEncounterVideo(["video/fiveSouthEncounter1.mp4"], [minotaur_audio], [8]);
-fourSouthEncounterVideo = new AisleEncounterVideo(["video/fourSouthEncounter1.mp4"], [sentry_audio], [6]);
-sixNorthEncounterVideo = new AisleEncounterVideo(["video/sixNorthEncounter1.mp4", "video/sixNorthEncounter2.mp4", "video/sixNorthEncounter3.mp4"], [woman_audio, woman_audio, woman_audio], [12,11,10]);
-sixSouthEncounterVideo = new AisleEncounterVideo(["video/sixSouthEncounter1.mp4", "video/sixSouthEncounter2.mp4"], [woman_audio, woman_audio_tea], [13, 10]);
+twoNorthEncounterVideo = new AisleEncounterVideo(["video/twoNorthEncounter1.mp4"], [minotaur_audio], [6], true, [20]);
+threeNorthEncounterVideo = new AisleEncounterVideo(["video/threeNorthEncounter1.mp4"], [sentry_audio], [10], false, null);
+fiveNorthEncounterVideo = new AisleEncounterVideo(["video/fiveNorthEncounter1.mp4", "video/fiveNorthEncounter2.mp4"], [minotaur_audio, sentry_death_audio], [8,2], true, [19,28]);//check death
+oneSouthEncounterVideo = new AisleEncounterVideo(["video/oneSouthEncounter1.mp4"], [minotaur_audio], [7], true, [20]);
+fiveSouthEncounterVideo = new AisleEncounterVideo(["video/fiveSouthEncounter1.mp4"], [minotaur_audio], [8], true, [19]);
+fourSouthEncounterVideo = new AisleEncounterVideo(["video/fourSouthEncounter1.mp4"], [sentry_audio], [6], false, null);
+sixNorthEncounterVideo = new AisleEncounterVideo(["video/sixNorthEncounter1.mp4", "video/sixNorthEncounter2.mp4", "video/sixNorthEncounter3.mp4"], [woman_audio, woman_audio, woman_audio], [12,11,10], false, null);
+sixSouthEncounterVideo = new AisleEncounterVideo(["video/sixSouthEncounter1.mp4", "video/sixSouthEncounter2.mp4"], [woman_audio, woman_audio_tea], [13, 10], false, null);
 
 
 //endcap video
