@@ -13,30 +13,36 @@ var newGameState;
 var lastKeypress = null;
 
 function startSpot() {
-	return fourSouth;
-	//return startSpots[Math.floor(Math.random()*startSpots.length)];
+	//return fourSouth;
+	return startSpots[Math.floor(Math.random()*startSpots.length)];
 }
 
 var state = startSpot();
-
-function start() {
-	div = getOverlay();
-	div.visibility = 'hidden';
-}
 
 function keyPressEvent(event) {
 	if(isValidKey(event.keyCode)) {
 		lastKeypress = event.keyCode;
 	}
-	if(isVideoDone(getVideo)) {
+	if(keyIsSpace(event) && noCheating(event,state)) {
+		init();
+		return;
+	}
+	if(isVideoDone(getVideo())) {
 		playNextVideo();
 	}
 }
 
+function noCheating(event,state) {
+	return !isFatal(state) || getVideo().paused;
+}
+
 function init() {
+	state = startSpot();
 	div = getOverlay();
 	div.style.visibility="hidden";
+	getAudio().pause();
 	video = getVideo();
+	video.style.cssText="";
 	video.src = state.videoHolder.nextVideo();
 	video.load();
 	video.play();
@@ -46,12 +52,16 @@ function getVideo() {
 	return document.getElementById("theVideo");
 }
 
+function getAudio() {
+	return document.getElementById("theAudio");
+}
+
 function getOverlay() {
 	return document.getElementById("gameOver");
 }
 
 function isFatal(state) {
-	return (state instanceof AisleEncounter) && state.videoHolder.is_fatal;
+	return (state != null) && (state instanceof AisleEncounter) && state.videoHolder.is_fatal;
 }
 
 function playNextVideo() {
@@ -74,7 +84,7 @@ function shouldWaitForUser(state) {
 }
 
 function playGameOver() {
-	audio = document.getElementById("theAudio");
+	audio = getAudio();
 	audio.src = "audio/gameOver.mp3";
 	audio.load();
 	audio.play();
@@ -125,7 +135,7 @@ function checkGameOver(event) {
 function checkStartAudio(event) {
 	if(state != null && state.is_encounter) {
 		if(Math.abs(event.target.currentTime - state.videoHolder.audioOffset()) < 1) {
-			audio = document.getElementById("theAudio");
+			audio = getAudio();
 			audio.src = state.videoHolder.audioSrc();
 			audio.load();
 			audio.play();
