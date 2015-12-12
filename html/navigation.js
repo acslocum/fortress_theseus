@@ -12,7 +12,7 @@ var startSpots = [oneNorth, twoNorth, threeNorth, fourNorth, fiveNorth, sixNorth
 var lastKeypress = null;
 
 function startSpot() {
-	return fiveNorth;
+	return fourSouth;
 	//return startSpots[Math.floor(Math.random()*startSpots.length)];
 }
 
@@ -79,7 +79,7 @@ function nextState(state, event) {
 
 function checkStartAudio(event) {
 	if(state != null && state.is_encounter) {
-		if(Math.abs(event.target.currentTime - state.videoHolder.audio_offset) < 1) {
+		if(Math.abs(event.target.currentTime - state.videoHolder.audioOffset()) < 1) {
 			audio = document.getElementById("theAudio");
 			audio.src = state.videoHolder.audioSrc();
 			audio.load();
