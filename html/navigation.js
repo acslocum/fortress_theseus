@@ -41,6 +41,7 @@ function init() {
 	div = getOverlay();
 	div.style.visibility="hidden";
 	getAudio().pause();
+	hideArrows();
 	video = getVideo();
 	video.style.cssText="";
 	video.src = state.videoHolder.nextVideo();
@@ -61,6 +62,10 @@ function getOverlay() {
 	return document.getElementById("gameOver");
 }
 
+function getArrows() {
+	return document.getElementById("arrows");
+}
+
 function isFatal(state) {
 	return (state != null) && (state instanceof AisleEncounter) && state.videoHolder.is_fatal;
 }
@@ -74,6 +79,7 @@ function playNextVideo() {
 			state = nextState(state,event);
 			videoHolder = state.videoHolder;
 		}
+		hideArrows();
 		video.src = videoHolder.nextVideo();
 		video.load();
 		video.play();
@@ -120,6 +126,13 @@ function nextState(state, event) {
 function checkTimeEvents(event) {
 	checkGameOver(event);
 	checkStartAudio(event);
+	checkShowArrows(event);
+}
+
+function checkShowArrows(event) {
+	if(isVideoAlmostDone(getVideo()) && !state.is_endcap) {
+		showArrows();
+	}
 }
 
 function checkGameOver(event) {
@@ -142,6 +155,16 @@ function checkStartAudio(event) {
 			audio.play();
 		}
 	}
+}
+
+function showArrows() {
+	arrows = getArrows();
+	arrows.style.visibility='visible';
+}
+
+function hideArrows() {
+	arrows = getArrows();
+	arrows.style.visibility="hidden";
 }
 
 function shouldRunEncounter(aisleState) {
